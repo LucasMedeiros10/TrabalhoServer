@@ -43,8 +43,15 @@ public class TelaPrincipal extends JFrame{
 		JButton btnReiniciarServer = new JButton("Reiniciar Server");
 		btnReiniciarServer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				fecharConexao();				
-				//iniciarConexao();
+				fecharConexao();
+				
+				Thread Thrstart  = new Thread(new Runnable() {					
+					@Override
+					public void run() {
+						iniciarConexao();
+					}
+				});
+				Thrstart.start();
 			}
 		});
 		
@@ -87,7 +94,7 @@ public class TelaPrincipal extends JFrame{
 		getContentPane().setLayout(groupLayout);
 		setVisible(true);		
 		
-		// $hide>>$
+		// $hide>>$	
 		iniciarConexao();
 		// $hide<<$				
 	}
@@ -95,9 +102,9 @@ public class TelaPrincipal extends JFrame{
 	public void iniciarConexao(){
 		try {
 			circulo.setOnline(true);
+			this.repaint();
 			socket.startServer();
 		} catch (IOException e) {
-			e.printStackTrace();
 			circulo.setOnline(false);
 		}		
 	}
@@ -106,8 +113,7 @@ public class TelaPrincipal extends JFrame{
 		circulo.setOnline(false);
 		try {
 			socket.shutdown();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 		}
 	}
 }

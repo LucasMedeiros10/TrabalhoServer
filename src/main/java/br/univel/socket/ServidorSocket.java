@@ -31,7 +31,6 @@ public class ServidorSocket {
 	}
 	
 	public void startServer() throws IOException{
-		server = null;
 		server = new ServerSocket(1000);
 		
 		while (!server.isClosed()) {
